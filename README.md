@@ -119,7 +119,7 @@ Ex: VEChain, Cardano, and Polkadot. V1.1 will also fold the currently separate p
 they write into crypto_valuations.xlsx's data qualification lists. It will save the user having to import the csv.
 
 #### Version 1.2
-V1.2 will add additional metrics such as protocol revenue if I can find sources that be parsed or queried. 
+V1.2 will add additional metrics such as protocol revenue if I can find sources that can be parsed or queried. 
 TVL is inert if no one is transacting while revenue indicates both usage and efficiency. See 
 https://messari.io/article/state-of-compound-q3-2021?utm_source=newsletter&utm_medium=middle&utm_campaign=state-of-compound-q3 
 as an example why metrics should go beyond TVL. 
