@@ -40,7 +40,7 @@ Note: The Python packages need to be installed on the local site rather than jus
 
 ### A Note on the data-files Folder
 You'll notice that the project includes json files of cached responses from the Defillma APIs.
-This is so that during development, I don't repeated hit the sites for new data when new data are not required. 
+This is so that during development, I don't repeatedly hit the site for new data when new data are not required. 
 The released version's config.txt has the DEV_MODE turned off so that each run pulls fresh data. If the user wishes 
 to extend the code, it is recommended that you turn DEV_MODE to on. When new data is needed during 
 development, just remove all the cached files in the data-file directory.
@@ -103,7 +103,7 @@ around 15000, this row range should leave plenty of room for expansion without b
    1) https://docs.llama.fi/api
    2) https://github.com/DefiLlama/DefiLlama-Adapters
 4) PyCharm https://www.jetbrains.com/pycharm/guide/tips/quick-docs/
-5) defillama_and_cmc_slugs: https://github.com/PCWCFA/defillama_and_cmc_slugs
+5) defillama_and_cmc_slugs: https://github.com/PCWCFA/defillama_and_cmc_slugs_public
 
 ## Roadmap 
 Below are the planned versions. 
@@ -131,4 +131,4 @@ kick off the re-evaluation.
 
 ## Licenses
 xwlings CE is distributed under the BSD-3 License. See License.txt.
-crypto_valuations is also distributed under the BSD-3 License. See License.txt.
+crypto_valuations is also distributed under the BSD-3 License. Also see License.txt.
