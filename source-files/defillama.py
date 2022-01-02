@@ -21,7 +21,7 @@ def read_protocol_tvl(coin):
             if re.search('200', str(response)):
                 response_text = response.text
                 print(f'Defillama protocol endpoint: {link} {response}')
-                if (reponse_text == '[]'):
+                if (response_text == '[]'):
                     raise Exception(f'Defillama {link} response: {response.text}')
             else:
                 raise Exception(f'Defillama {link} response: {response.text}')

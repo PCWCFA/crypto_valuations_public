@@ -12,7 +12,8 @@ This project contains the following files:
 1) crypto_valuations.xlsx: This is the Excel that contains the chains and protocols that the user would like to 
 evaluate.
 2) crypto_valuations.py: This is the script that the xlwings plugin's Run main button will call. 
-3) coinmarketcap.py: This script calls the Coinmarketcap API to get the market value and fully-diluted market value.  
+3) coinmarketcap.py: This script calls the Coinmarketcap API to get the market capitalization and fully-diluted market 
+capitalization.  
 4) defillama.py: This script interacts with Defillama's API to get the TVL of chains and protocols.
 5) configs.py: This script contains the configurations for DEV_MODE, DATA_FILE_PATH, CMC_API, and UNIT.
 6) main.py: This file is for running the Python code without Excel for development and debugging.
@@ -24,20 +25,97 @@ It should work with all version of Excel that works with the xlwings CE (hencefo
 2) See [Related Docs](#relateddocs) for xlwings compatibility with different versions of Excel.
 
 ### Installation
-1) The xlwings plugin. See [Related Docs](#relateddocs) for the xlwings documentation. Once the plugin has been 
-installed, the user needs to configure:
+The installation guide is for Windows.
+1) Install Python 3.9 
+   1) Open the Microsoft Store by selecting one of the search buttons. 
+   
+      ![image info](readme-files/windows_search_buttons.png)
+   2) In the Search dialog, type "Microsoft Store".
+   
+      ![image info](readme-files/microsoft_store.png)
+   3) In the Microsoft Store, type "Python". Then select Python 3.9.
+   
+      ![image info](readme-files/python_39_ms_store.png)
+   4) Follow the installation instructions of Python 3.9 and note the full path in which Python is installed. This path 
+will be used by the xlwings plugin.
+2) Configure the Windows PATH variable to include Python and Python/scripts. 
+   1) Open the Microsoft Store by selecting one of the search buttons.
+   
+      ![image info](readme-files/windows_search_buttons.png)
+   2) In the Search dialog, type "PATH". Windows will automatically recognize that PATH is configured in System 
+Properties. 
+   
+      ![image info](readme-files/windows_search_path.png)
+   3) In the System Properties dialog, click on Environment Variables.      
+
+      ![image info](readme-files/windows_system_properties.png)
+   4) In the Environment Variables dialog, select the Path variable from the user variables selection box.
+   
+      ![image info](readme-files/windows_path_variables_patrick.png)
+   5) Once the Path is highlighted, click on the Edit button, and in the Edit environment variable dialog, add the path 
+to the Python39.exe. In my system, it is 
+C:\Users\patri\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0. Once the path
+is added, add also the path to the Python\scripts directory. 
+Ex: C:\Users\patri\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\scripts. Once 
+these paths have been added, select the OK button to commit the newly added paths.
+   
+      ![image info](readme-files/windows_path_editing.png)
+3) Install the xlwings plugin and xlwings. The user can see [Related Docs](#relateddocs) for the xlwings documentation. However,
+I have extracted the relevant steps here: 
+   1) Open cmd by first selecting one of the Windows search buttons.
+   
+    ![image info](readme-files/windows_search_buttons.png)
+   2) In the search dialog, type "cmd".
+   
+    ![image info](readme-files/windows_search_cmd.png)
+   3) In the Command Prompt window, type "pip install xlwings".
+   
+    ![image info](readme-files/windows_cmd_pip_install_xlwings.png)
+   4) Also in the Command Prompt window, type "xlwings addin install" to install the Excel plugin.
+   
+    ![image info](readme-files/windows_cmd_xlwings_addin_install.png)
+
+   5) Keep the Command Prompt window open before proceeding to the next step.
+   
+4) Install all the other libraries in the requirements.txt file which should be just the requests library since we have 
+already installed xlwings in the above step.
+   1) In the Command Prompt window, type "pip install requests".
+
+5) Download and unzip the Github files.
+   1) Download the files by click Code->Download Zip. Save this file somewhere such as your Documents 
+   or Download folder.
+   
+       ![image info](readme-files/github_download.png)
+   2) Unzip the file .zip download and note the full path of the unzipped folder's source-files directory. This path
+will be needed in the xlwings plugin.
+   
+       ![image info](readme-files/windows_unzip_github.png)
+
+6) Once both the plugin and the Github file download are completed, the user can confirm the xlwings plugin installation
+by starting Excel and confirming that a xlwings menu now appears in Excel. If the 
+xlwings menu is in Excel, click on the xlwings menu. The user should see two variables that need to be configured:  
    1) Interpreter: This is the full path to the Python interpreter. Ex: C:\Users\user_name\AppData\Local\Microsoft
 \WindowsApps\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\python3.9.exe.
    2) PYTHONPATH: This is the full path to the directory containing the project source files. 
-Ex: C:\Users\user_name\Documents\crypto\crypto_valuations\source-files.
+Ex: C:\Users\patri\Downloads\crypto_valuations_public-master\crypto_valuations_public-master\source-files.
+   
    ![image info](readme-files/xlwings_plugin_configuration.png)
 
-2) See requirements.txt for the Python packages. 
-
-Note: The Python packages need to be installed on the local site rather than just the venv of, say, PyCharm. 
-
-3) Copy all the files in this project, including the Excel, to the location you have specified in PYTHONPATH.
-
+7) Configure the configs.py.
+   1) Open the configs.py in an editor (ex: PyCharm or Notepad). 
+   2) Type DATA_FILE_PATH = 'The path where you have downloaded and unzipped the Github files.'
+Ex: DATA_FILE_PATH = 'C:\Users\patri\Downloads\crypto_valuations_public-master\crypto_valuations_public-master\data-files.'
+   3) Go to https://coinmarketcap.com/api/ and follow the steps to create a free account.
+   
+   ![image info](readme-files/cmc_get_api_key.png)
+   4) Once you have the account, copy and paste the API key by selecting the COPY KEY button. This is the value that 
+will be assigned to CMC_API_KEY.
+   
+   ![image info](readme-files/cmc_copy_api_key.png)
+   5) When you have both DATA_FILE_PATH and CMC_API_KEY configured, the configs.py file should appear similar to below.
+   
+   ![image info](readme-files/windows_pycharm_configs_py.png)
+   
 ### A Note on the data-files Folder
 In configs.py, ensure DEV_MODE = 'OFF' and configure DATA_FILE_PATH to where you plan to store the files even if you 
 leave DEV_MODE = 'OFF'. Note that DEV_MODE is used only for Defillama because of two reasons: 1) The 
@@ -47,14 +125,25 @@ and checking for saved files much easier. The Coinmarketcap API supports both ag
 having DEV_MODE support is not as critical.
 
 ## Usage
-There are two ways to run the scripts, from PyCharm or from the xlwings plugin's Run main button. 
-To run the scripts from PyCharm, the user must have configured a project, interpreter, and directory structure. See 
-the PyCharm documentation. For this README, we will focus on running from the xlwings plugin. 
+Assuming all of the installation and configuration steps were completed, then click on the Run main button of 
+the xlwings plugin. The Run main button will run the Python script crypto_valuations.py. I recommend that you zero (not
+delete the values) in the Market Cap, Fully-Diluted Market Cap, and TVL cells to make it easier to see that the Python
+scripts have indeed fetched new values. Note that I stated zero instead of delete because xwlwings uses blank cells to 
+delimit the range of value it grabs from Excel. 
+
+Correct: 
 
 ![image info](readme-files/excel_explanation.png)
 
-Assuming the Interpreter and PYTHONPATH were configured correctly, and all the packages were installed, then 
-click on the Run main button of the xlwings plugin. The Run main button will run the Python script crypto_valuations.py.
+Incorrect: 
+
+![image info](readme-files/excel_incorrect.png)
+
+Because xlwings uses blank cells to delimit the range of data it grabs from Excel, the above example instructed xlwings 
+to only update SAB and SOL because the blank row 4 served as a delimiter. If the user wants to update the values for 
+additional chains or protocols, the user can remove the blank row in row 4. 
+
+![image info](readme-files/excel_explanation_additional.png)
 
 ### A Note on the Excel Name and Structure 
 Do not change the name of the Excel unless you also rename the Python script crypto_valuations.py because the xlwings 
@@ -90,9 +179,11 @@ around 15,000 should mean this row range will leave plenty of room for expansion
 <a name="relateddocs"></a>
 ## Related Docs
 1) xlwings CE
-   1) https://docs.xlwings.org/en/stable/quickstart.html
+   1) https://docs.xlwings.org/en/stable/installation.html
    2) https://github.com/xlwings/xlwings
-2) Coinmarketcap API https://coinmarketcap.com/api/documentation/v1/#section/Introduction
+2) Coinmarketcap API 
+   1) https://coinmarketcap.com/api/
+   2) https://coinmarketcap.com/api/documentation/v1/#section/Introduction
 3) Defillama API
    1) https://docs.llama.fi/api
    2) https://github.com/DefiLlama/DefiLlama-Adapters
