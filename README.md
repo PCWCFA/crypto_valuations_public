@@ -15,8 +15,9 @@ evaluate.
 3) coinmarketcap.py: This script calls the Coinmarketcap API to get the market capitalization and fully-diluted market 
 capitalization.  
 4) defillama.py: This script interacts with Defillama's API to get the TVL of chains and protocols.
-5) configs.py: This script contains the configurations for DEV_MODE, DATA_FILE_PATH, CMC_API, and UNIT.
+5) configs.py: This script contains the configurations for DEV_MODE, DATA_FILE_PATH, and UNIT.
 6) main.py: This file is for running the Python code without Excel for development and debugging.
+7) keys.py: This script contains the API keys. For now, it is just the CMC_API_KEY.
 
 ## Installation
 ### Pre-requisites
@@ -27,9 +28,10 @@ It should work with all version of Excel that works with the xlwings CE (hencefo
 ### Installation
 The installation guide is for Windows.
 1) Install Python 3.9 
-   1) Open the Microsoft Store by selecting one of the search buttons. 
+   1) Open the Microsoft Store by selecting one of the search buttons.
+
+       ![image info](readme-files/windows_search_buttons.png)
    
-      ![image info](readme-files/windows_search_buttons.png)
    2) In the Search dialog, type "Microsoft Store".
    
       ![image info](readme-files/microsoft_store.png)
@@ -43,39 +45,39 @@ will be used by the xlwings plugin.
    
       ![image info](readme-files/windows_search_buttons.png)
    2) In the Search dialog, type "PATH". Windows will automatically recognize that PATH is configured in System 
-Properties. 
+Properties.
+   ![image info](readme-files/windows_search_path.png)
    
-      ![image info](readme-files/windows_search_path.png)
-   3) In the System Properties dialog, click on Environment Variables.      
-
-      ![image info](readme-files/windows_system_properties.png)
+   3) In the System Properties dialog, click on Environment Variables.
+   ![image info](readme-files/windows_system_properties.png)
+   
    4) In the Environment Variables dialog, select the Path variable from the user variables selection box.
+   ![image info](readme-files/windows_path_variables_patrick.png)
    
-      ![image info](readme-files/windows_path_variables_patrick.png)
    5) Once the Path is highlighted, click on the Edit button, and in the Edit environment variable dialog, add the path 
 to the Python39.exe. In my system, it is 
 C:\Users\patri\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0. Once the path
 is added, add also the path to the Python\scripts directory. 
 Ex: C:\Users\patri\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\scripts. Once 
 these paths have been added, select the OK button to commit the newly added paths.
-   
-      ![image info](readme-files/windows_path_editing.png)
+![image info](readme-files/windows_path_editing.png)
+
 3) Install the xlwings plugin and xlwings. The user can see [Related Docs](#relateddocs) for the xlwings documentation. However,
 I have extracted the relevant steps here: 
    1) Open cmd by first selecting one of the Windows search buttons.
    
-    ![image info](readme-files/windows_search_buttons.png)
+      ![image info](readme-files/windows_search_buttons.png)
+   
    2) In the search dialog, type "cmd".
+   ![image info](readme-files/windows_search_cmd.png)
    
-    ![image info](readme-files/windows_search_cmd.png)
    3) In the Command Prompt window, type "pip install xlwings".
+   ![image info](readme-files/windows_cmd_pip_install_xlwings.png)
    
-    ![image info](readme-files/windows_cmd_pip_install_xlwings.png)
-   4) Also in the Command Prompt window, type "xlwings addin install" to install the Excel plugin.
-   
-    ![image info](readme-files/windows_cmd_xlwings_addin_install.png)
+   5) Also in the Command Prompt window, type "xlwings addin install" to install the Excel plugin.
+   ![image info](readme-files/windows_cmd_xlwings_addin_install.png)
 
-   5) Keep the Command Prompt window open before proceeding to the next step.
+   6) Keep the Command Prompt window open before proceeding to the next step.
    
 4) Install all the other libraries in the requirements.txt file which should be just the requests library since we have 
 already installed xlwings in the above step.
@@ -84,12 +86,10 @@ already installed xlwings in the above step.
 5) Download and unzip the Github files.
    1) Download the files by click Code->Download Zip. Save this file somewhere such as your Documents 
    or Download folder.
-   
-       ![image info](readme-files/github_download.png)
+   ![image info](readme-files/github_download.png)
    2) Unzip the file .zip download and note the full path of the unzipped folder's source-files directory. This path
 will be needed in the xlwings plugin.
-   
-       ![image info](readme-files/windows_unzip_github.png)
+   ![image info](readme-files/windows_unzip_github.png)
 
 6) Once both the plugin and the Github file download are completed, the user can confirm the xlwings plugin installation
 by starting Excel and confirming that a xlwings menu now appears in Excel. If the 
@@ -98,24 +98,24 @@ xlwings menu is in Excel, click on the xlwings menu. The user should see two var
 \WindowsApps\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\python3.9.exe.
    2) PYTHONPATH: This is the full path to the directory containing the project source files. 
 Ex: C:\Users\patri\Downloads\crypto_valuations_public-master\crypto_valuations_public-master\source-files.
-   
    ![image info](readme-files/xlwings_plugin_configuration.png)
 
 7) Configure the configs.py.
    1) Open the configs.py in an editor (ex: PyCharm or Notepad). 
    2) Type DATA_FILE_PATH = 'The path where you have downloaded and unzipped the Github files.'
-Ex: DATA_FILE_PATH = 'C:\Users\patri\Downloads\crypto_valuations_public-master\crypto_valuations_public-master\data-files.'
-   3) Go to https://coinmarketcap.com/api/ and follow the steps to create a free account.
-   
-   ![image info](readme-files/cmc_get_api_key.png)
-   4) Once you have the account, copy and paste the API key by selecting the COPY KEY button. This is the value that 
-will be assigned to CMC_API_KEY.
-   
-   ![image info](readme-files/cmc_copy_api_key.png)
-   5) When you have both DATA_FILE_PATH and CMC_API_KEY configured, the configs.py file should appear similar to below.
-   
+Ex: DATA_FILE_PATH = 'C:\Users\patri\Downloads\crypto_valuations_public-master\data-files.'
+   3) The configs.py file should appear similar to below.
    ![image info](readme-files/windows_pycharm_configs_py.png)
-   
+
+8) Configure the keys.py file 
+   1) First, rename the supplied keys_sample.py to keys.py.  
+   2) Then go to https://coinmarketcap.com/api/ and follow the steps to create a free account.
+   ![image info](readme-files/cmc_get_api_key.png)
+
+   3) Once you have the account, copy and paste the API key by selecting the COPY KEY button. This is the value that 
+   will be assigned to CMC_API_KEY.
+   ![image info](readme-files/cmc_copy_api_key.png)
+
 ### A Note on the data-files Folder
 In configs.py, ensure DEV_MODE = 'OFF' and configure DATA_FILE_PATH to where you plan to store the files even if you 
 leave DEV_MODE = 'OFF'. Note that DEV_MODE is used only for Defillama because of two reasons: 1) The 

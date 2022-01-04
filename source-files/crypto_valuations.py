@@ -91,7 +91,6 @@ def main():
                 cmc_id = str(int(rng_in.value[j][1]))
                 rng_out_value[j][0] = cmc_data[cmc_id]['quote']['USD']['market_cap'] / configs.UNIT
                 rng_out_value[j][1] = cmc_data[cmc_id]['quote']['USD']['fully_diluted_market_cap'] / configs.UNIT
-
         row += 1
 
     # Write the rng_out_value to Excel.
