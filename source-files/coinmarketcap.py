@@ -3,6 +3,7 @@ from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 import configs
 import re
+import keys
 
 def read_mc_fdmc(cmc_ids):
     """Using the ID from coinmarketcap.com, get the market cap and fully-diluted marketcap.
@@ -15,6 +16,7 @@ def read_mc_fdmc(cmc_ids):
     # Use this URL for initial testing. Note it does not have the complete data
     # url = 'https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
     configs.init()
+    keys.init()
 
     parameters = {
         'id': cmc_ids
@@ -22,7 +24,7 @@ def read_mc_fdmc(cmc_ids):
 
     headers = {
         'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': configs.CMC_API_KEY,
+        'X-CMC_PRO_API_KEY': keys.CMC_API_KEY,
     }
 
     session = Session()
