@@ -2,6 +2,8 @@ import xlwings
 import coinmarketcap
 import defillama
 import configs
+import defillama_slugs
+import cmc_api
 
 
 def main():
@@ -19,7 +21,11 @@ def main():
 
     # Open the workbook & watchlist
     wb = xlwings.Book('crypto_valuations.xlsx')
+    sheet_cmc_ids = wb.sheets['cmc_ids']
     sheet = wb.sheets['Watchlist']
+
+    if configs.UPDATE_CMC_REFERENCE_DATA == 'ON':
+        cmc_api.get_cmc_ids()
 
     # Use range expansion to get the entire table starting at A2.
     # See the https://docs.xlwings.org/en/stable/datastructures.html.
