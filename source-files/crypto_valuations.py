@@ -27,6 +27,9 @@ def main():
     if configs.UPDATE_CMC_REFERENCE_DATA == 'ON':
         cmc_api.get_cmc_ids()
 
+    if configs.UPDATE_DEFILLAMA_REFERENCE_DATA == 'ON':
+        defillama_slugs.get_protocols()
+
     # Use range expansion to get the entire table starting at A2.
     # See the https://docs.xlwings.org/en/stable/datastructures.html.
     # The ndim=2 is needed. In case there is only row in the Excel, I still want to force the return to a
