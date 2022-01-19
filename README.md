@@ -1,4 +1,4 @@
-# Crypto Valuations Excel with Automated Market Cap and TVL Updates
+# Crypto Valuations Excel with Automated Market Cap and TVL Updates V1.1 
 ## Overview
 The purpose of the project is to use Excel to present some basic valuation metrics using market cap, fully-diluted 
 market, and total value locked (TVL) so that the user can quickly perform a first-level assessment of potential crypto 
@@ -6,6 +6,16 @@ investments.
 
 The purpose of the Python scripts is to automate the update of market cap, fully-diluted market cap, and the TVL so that
 the user does not have to search through dozens of pages and manually update the Excel.
+
+## What Is New for Version 1.1
+Version 1.1: 
+1) Folds the previously separate project that updates the Coinmarketcap and Defillama reference data into 
+crypto_valuations. Benefit: The user no longer needs to run the other project and then import the CSV to 
+crypto_valuations.xlsx.
+2) Combines the previously separate Coinmarketcap.com and Defillama reference data using the available cmc_id in the 
+Defillama response. 
+3) Gets rid of DEV_MODE because Defillama now has a current TVL for both protocols and chains, so needing to cache a 
+bunch of historical TVLs to speed up development is no longer a need.
 
 ## Project Content
 This project contains the following files:
@@ -17,7 +27,12 @@ capitalization.
 4) defillama.py: This script interacts with Defillama's API to get the TVL of chains and protocols.
 5) configs.py: This script contains the configurations for DEV_MODE, DATA_FILE_PATH, and UNIT.
 6) main.py: This file is for running the Python code without Excel for development and debugging.
-7) keys.py: This script contains the API keys. For now, it is just the CMC_API_KEY.
+7) keys.py: This script contains the API keys. For now, it is just the CMC_API_KEY. Note that this file is not checked
+into the repository. The user will have to rename keys_sample.py to keys.py and place his own CMC API key.
+8) keys_sample.py: This is the file that is to be renamed by the user to keys.py. 
+9) cmc_api.py: This script updates the Coinmarketcap reference data in the crypto_valuations.xlxs cmc_ids tab.
+10) defillama_slugs.py: This script updates the Defillama protocol reference data in the crypto_valuations.xlsx
+Dictionary tab. 
 
 ## Installation
 ### Pre-requisites
@@ -106,6 +121,7 @@ Ex: C:\Users\patri\Downloads\crypto_valuations_public-master\crypto_valuations_p
 Ex: DATA_FILE_PATH = 'C:\Users\patri\Downloads\crypto_valuations_public-master\data-files.'
    3) The configs.py file should appear similar to below.
    ![image info](readme-files/windows_pycharm_configs_py.png)
+   4) New for version 1.1 is the ability to update the reference data by configuring UPDATE_REFERENCE_DATA = 'ON'. 
 
 8) Configure the keys.py file 
    1) First, rename the supplied keys_sample.py to keys.py.  
@@ -115,6 +131,7 @@ Ex: DATA_FILE_PATH = 'C:\Users\patri\Downloads\crypto_valuations_public-master\d
    3) Once you have the account, copy and paste the API key by selecting the COPY KEY button. This is the value that 
    will be assigned to CMC_API_KEY.
    ![image info](readme-files/cmc_copy_api_key.png)
+   
 
 ### A Note on the data-files Folder
 In configs.py, ensure DEV_MODE = 'OFF' and configure DATA_FILE_PATH to where you plan to store the files even if you 
@@ -188,7 +205,6 @@ around 15,000 should mean this row range will leave plenty of room for expansion
    1) https://docs.llama.fi/api
    2) https://github.com/DefiLlama/DefiLlama-Adapters
 4) PyCharm https://www.jetbrains.com/pycharm/guide/tips/quick-docs/
-5) defillama_and_cmc_slugs: https://github.com/PCWCFA/defillama_and_cmc_slugs_public
 
 ## Roadmap 
 Below are the planned versions. 
