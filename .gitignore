@@ -1,3 +1,5 @@
 /venv/
 /.idea
 source-files/keys.py
+/test/*.png
+/source/*.json
