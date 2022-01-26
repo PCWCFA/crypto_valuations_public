@@ -28,7 +28,7 @@ evaluate.
 2) crypto_valuations.py: This is the script that the xlwings plugin's Run main button will call. 
 3) coinmarketcap.py: This script calls the Coinmarketcap API to get the market capitalization and fully-diluted market 
 capitalization and updates the MC and FDMC for all Coinmarketcap listings.  
-4) configs.py: This script contains the configurations for DEV_MODE, DATA_FILE_PATH, and UNIT.
+4) configs.py: This script contains the configurations.
 5) main.py: This file is for running the Python code without Excel for development and debugging.
 6) keys.py: This script contains the API keys. For now, it is just the CMC_API_KEY. Note that this file is not checked
 into the repository. The user will have to rename keys_sample.py to keys.py and place his own CMC API key.
@@ -118,15 +118,12 @@ xlwings menu is in Excel, click on the xlwings menu. The user should see two var
 Ex: C:\Users\patri\Downloads\crypto_valuations_public-master\crypto_valuations_public-master\source-files.
    ![image info](readme-files/xlwings_plugin_configuration.png)
 
-7) Configure the configs.py.
-   1) Open the configs.py in an editor (ex: PyCharm or Notepad). 
-   2) Type DATA_FILE_PATH = 'The path where you have downloaded and unzipped the Github files.'
-Ex: DATA_FILE_PATH = 'C:\Users\patri\Downloads\crypto_valuations_public-master\data-files.'
-   3) The configs.py file should appear similar to below.
-   ![image info](readme-files/windows_pycharm_configs_py.png)
-   4) New for version 1.1 is the ability to update the reference data by configuring UPDATE_REFERENCE_DATA = 'ON'. 
+7) Configs.py: As of V1.1, the configs CMC_IDS_COUNT and ID_REQUEST_LENGTH and have been added. The first 
+configs equals how many CMC listings there are, and the second controls how many of these listings are 
+aggregated together in single request to quotes/latest. Note that this is needed because trying to request
+greater than ~800 IDs at once results in a 414 response and an error message that the URL is too long.
 
-8) Configure the keys.py file 
+9) Configure the keys.py file 
    1) First, rename the supplied keys_sample.py to keys.py.  
    2) Then go to https://coinmarketcap.com/api/ and follow the steps to create a free account.
    ![image info](readme-files/cmc_get_api_key.png)
@@ -136,32 +133,11 @@ Ex: DATA_FILE_PATH = 'C:\Users\patri\Downloads\crypto_valuations_public-master\d
    ![image info](readme-files/cmc_copy_api_key.png)
    
 
-### A Note on the data-files Folder
-In configs.py, ensure DEV_MODE = 'OFF' and configure DATA_FILE_PATH to where you plan to store the files even if you 
-leave DEV_MODE = 'OFF'. Note that DEV_MODE is used only for Defillama because of two reasons: 1) The 
-Defillama endpoint returns all historical data, so each json is sizable, and 2) the Defillama endpoint does not support
-aggregation, so each protocol or chain's historical data can be easily saved as a separate file, making the saving
-and checking for saved files much easier. The Coinmarketcap API supports both aggregation and current data query, so 
-having DEV_MODE support is not as critical.
-
 ## Usage
 Assuming all of the installation and configuration steps were completed, then click on the Run main button of 
-the xlwings plugin. The Run main button will run the Python script crypto_valuations.py. I recommend that you zero (not
-delete the values) in the Market Cap, Fully-Diluted Market Cap, and TVL cells to make it easier to see that the Python
-scripts have indeed fetched new values. Note that I stated zero instead of delete because xwlwings uses blank cells to 
-delimit the range of value it grabs from Excel. 
+the xlwings plugin. The Run main button will run the Python script crypto_valuations.py. All the Coinmarketcap and
+Defillama listings and their market cap, fully-diluted market, and TVL will be updated in the cmc_ids tabs.
 
-Correct: 
-
-![image info](readme-files/excel_explanation.png)
-
-Incorrect: 
-
-![image info](readme-files/excel_incorrect.png)
-
-Because xlwings uses blank cells to delimit the range of data it grabs from Excel, the above example instructed xlwings 
-to only update SAB and SOL because the blank row 4 served as a delimiter. If the user wants to update the values for 
-additional chains or protocols, the user can remove the blank row in row 4. 
 
 ![image info](readme-files/excel_explanation_additional.png)
 
@@ -169,32 +145,21 @@ additional chains or protocols, the user can remove the blank row in row 4.
 Do not change the name of the Excel unless you also rename the Python script crypto_valuations.py because the xlwings 
 plugin's Run main button looks for a Python script with the same name as the invoking Excel. 
 
-Do not change the order of the Excel because the Python scripts assume the location and format of the Excel data, for 
-example that the data start in cell A2 and that the CMC ID is column B. An 
-explanation of all the columns: 
-1) CMC Symbol: This is the Coinmarketcap symbol of the cryptocurrency.
-2) CMC ID: This is the Coinmarketcap unique ID of the cryptocurrency. 
-3) CMC Name: This is the corresponding non-unique name of the CMC ID. The Excel has vlookup to search this value by ID. 
-4) Defillama Protocol or Chain: Defillama has a protocol API endpoint for all protocols (apps, dexes, and lending built 
-on the chains) and a separate endpoint for the chains. This column tells the Python code which endpoint to use. 
-5) Defillama Protocol and Chain Names: It is unfortunate that there is no unified naming for all chains and protocols. 
-Ex: coinmarketcap calls LUNA terra-luna, but Defillama calls the same Terra, so the same chain must be named twice. 
-The name is qualified by the dictionary of allowed names queried by the related project defillama_and_cmc_slugs. 
-The user should use defillama_and_cmc_slugs to update the protocol and chain names from time to time.
-6) Market Cap: This is the market capitalization of the available number of tokens multiplied by the current price in 
-billions of USD. See coinmarketcap.com's definition.
-7) Fully-Diluted Market Cap: This is the market capitalization including those yet-to-be-released tokens times the 
+1) CMC ID: This is the Coinmarketcap unique ID of the cryptocurrency. 
+2) CMC Name: This is the corresponding non-unique name of the CMC ID. 
+3) CMC Symbol: This is the corresponding non-unique symbol of the CMC ID.  
+4) Defillama CMCId: This is the CMC ID listed on Defillama. This ID can be used to join the data between Coinmarketcap
+and Defillma. 
+5) Gecko ID: This is the Coingecko ID listed on Defillama. For now, it is included but not used. For the future, this
+6) Defillama Slug: This is the unique slug (for procotols) and name (for chains) of a Defillama listing. For now, it is
+included but not used. 
+ID could be used for join Defillma data with Coingecko data. 
+7) Market Cap: This is the market capitalization in billions of USD.
+8) Fully-Diluted Market Cap: This is the market capitalization including those yet-to-be-released tokens times the 
 current price in billions of USD. 
-8) TVL: This is the total value locked in billions of USD.
-9) Market Cap/TVL: This is the free-float market cap divided by the TVL. The Excel contains the formula, so do not
-overwrite. 
-10) FDMC/TVL: This is the fully-diluted market cap divided by TVL. It is the same indicator, except this indicator 
-includes all yet-to-be-released tokens.
+9) TVL: This is the total value locked in billions of USD.
 
-Note that the Excel has formulas and data validation only until row 105,954. The fact that CMC_IDs currently top out 
-around 15,000 should mean this row range will leave plenty of room for expansion without bogging down the Excel.
-
-![image info](readme-files/Extent_of_the_Formulas_and_Locking.png)
+The user can write formulas in columns 10 and 11 for MC/TVL and FDMC/TVL.  
 
 <a name="relateddocs"></a>
 ## Related Docs
@@ -210,7 +175,7 @@ around 15,000 should mean this row range will leave plenty of room for expansion
 4) PyCharm https://www.jetbrains.com/pycharm/guide/tips/quick-docs/
 
 ## Roadmap 
-Below are the planned versions. 
+Below are the planned versions. The roadmap has been updated as of V1.1.
 
 ### V1.0 
 #### Version 1.0 
@@ -219,13 +184,14 @@ Version 1.0's Python script requires that crypto_valuations.xlsx's format remain
 Excel.
 
 #### Version 1.1 
-V1.1 was repurposed that a) the previously separate projects for reference data are now part of the crypto_valuations 
-project and b) all listings on both Coinmarketcap and Defillama are now listed in crypto_valuations.xlsx. 
+V1.1 was repurposed so that a) the previously separate projects for reference data are now part of the crypto_valuations 
+project and b) all listings on both Coinmarketcap and Defillama are automatically updated in the cmc_ids tab. There is
+no longer a need for a separate watchlist and two sets of reference data.
 
 ### Version 1.2
-As noted in What's New in V1.1, there is a very small cross section between Coinmarketcap and Defillama listing, so that
-means the end goal of providing basic valuations for all listed coins is not yet achieved, so the next version will be
-to source more TVLs. 
+As noted in What's New in V1.1, there is a very small cross-section between Coinmarketcap and Defillama listings, so 
+that means the end goal of providing basic valuations for all listed coins is not yet achieved, so the next version 
+will be to source more TVLs. 
 
 #### Version 1.3
 V1.3 will add additional metrics such as protocol revenue if I can find sources that can be parsed or queried. 
