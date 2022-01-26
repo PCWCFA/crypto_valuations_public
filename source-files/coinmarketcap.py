@@ -30,20 +30,23 @@ def read_mc_fdmc(cmc_ids):
     session = Session()
     session.headers.update(headers)
 
+    cmc_ids_list =  cmc_ids.split(',')
+
     try:
         response = session.get(url, params=parameters)
-        data = json.loads(response.text)
 
         if re.search('200', str(response)):
+            data = json.loads(response.text)
             cmc_status = data['status']
 
             if (cmc_status['error_code'] == 0):
-                print(f'coinmarketcap {url} {response}')
+                print(f'Coinmarketcap mc and fdmc {url} {response} for cmc_ids {cmc_ids_list[0]} '
+                      f'to {cmc_ids_list[len(cmc_ids_list) - 1]}')
                 return data['data']
             else:
                 raise Exception(f'Got {cmc_status}')
         else:
-            raise Exception(f'Got cointmarketcap.com response {response}')
+            raise Exception(f'Got cointmarketcap.com response {response} and {response.text}')
 
     except (ConnectionError, Timeout, TooManyRedirects) as e:
         SystemExit(e)
