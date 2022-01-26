@@ -14,8 +14,12 @@ crypto_valuations. Benefit: The user no longer needs to run the other project an
 crypto_valuations.xlsx.
 2) Combines the previously separate Coinmarketcap.com and Defillama reference data using the available cmc_id in the 
 Defillama response. 
-3) Gets rid of DEV_MODE because Defillama now has a current TVL for both protocols and chains, so needing to cache a 
-bunch of historical TVLs to speed up development is no longer a need.
+3) Instead of using a watchlist, just update all available Coinmarketcap and Defillama listings' market cap, 
+fully-diluted market, and TVL in the cmc_ids tab.
+
+Note that of the approximately 10,000 listings on Coinmarketcap, only about 600 are also listed in Defillama, and of 
+the about 1,000 listed protocols and chains on Defillama, about 400 are not listed on Coinmarketcap. This lack of 
+coverage makes basic valuation difficult. That needs to be addressed in future versions. 
 
 ## Project Content
 This project contains the following files:
@@ -23,16 +27,15 @@ This project contains the following files:
 evaluate.
 2) crypto_valuations.py: This is the script that the xlwings plugin's Run main button will call. 
 3) coinmarketcap.py: This script calls the Coinmarketcap API to get the market capitalization and fully-diluted market 
-capitalization.  
-4) defillama.py: This script interacts with Defillama's API to get the TVL of chains and protocols.
-5) configs.py: This script contains the configurations for DEV_MODE, DATA_FILE_PATH, and UNIT.
-6) main.py: This file is for running the Python code without Excel for development and debugging.
-7) keys.py: This script contains the API keys. For now, it is just the CMC_API_KEY. Note that this file is not checked
+capitalization and updates the MC and FDMC for all Coinmarketcap listings.  
+4) configs.py: This script contains the configurations for DEV_MODE, DATA_FILE_PATH, and UNIT.
+5) main.py: This file is for running the Python code without Excel for development and debugging.
+6) keys.py: This script contains the API keys. For now, it is just the CMC_API_KEY. Note that this file is not checked
 into the repository. The user will have to rename keys_sample.py to keys.py and place his own CMC API key.
-8) keys_sample.py: This is the file that is to be renamed by the user to keys.py. 
-9) cmc_api.py: This script updates the Coinmarketcap reference data in the crypto_valuations.xlxs cmc_ids tab.
-10) defillama_slugs.py: This script updates the Defillama protocol reference data in the crypto_valuations.xlsx
-Dictionary tab. 
+7) keys_sample.py: This is the file that is to be renamed by the user to keys.py. 
+8) cmc_api.py: This script updates the Coinmarketcap reference data in the crypto_valuations.xlxs cmc_ids tab.
+9) defillama_slugs.py: This script matches the Defillama reference data to the Coinmarketcap reference data in
+crypto_valuations.xlsx's cmc_id tabs and also updates the TVL for all Defillama listings.
 
 ## Installation
 ### Pre-requisites
@@ -216,13 +219,16 @@ Version 1.0's Python script requires that crypto_valuations.xlsx's format remain
 Excel.
 
 #### Version 1.1 
-V1.1 will add support for digitalcoinprice.com for protocols and chains currently not listed on defillama. 
-Ex: VEChain, Cardano, and Polkadot. V1.1 will also fold the currently separate project defillama_and_cmc_slugs so that 
-they write into crypto_valuations.xlsx's data qualification lists. It will save the user from having to import the 
-reference data.
+V1.1 was repurposed that a) the previously separate projects for reference data are now part of the crypto_valuations 
+project and b) all listings on both Coinmarketcap and Defillama are now listed in crypto_valuations.xlsx. 
 
-#### Version 1.2
-V1.2 will add additional metrics such as protocol revenue if I can find sources that can be parsed or queried. 
+### Version 1.2
+As noted in What's New in V1.1, there is a very small cross section between Coinmarketcap and Defillama listing, so that
+means the end goal of providing basic valuations for all listed coins is not yet achieved, so the next version will be
+to source more TVLs. 
+
+#### Version 1.3
+V1.3 will add additional metrics such as protocol revenue if I can find sources that can be parsed or queried. 
 TVL is inert if no one is transacting while revenue and net income indicate usage and efficiency, respectively. See 
 https://messari.io/article/state-of-compound-q3-2021?utm_source=newsletter&utm_medium=middle&utm_campaign=state-of-compound-q3 
 for an example why metrics should go beyond TVL. 
