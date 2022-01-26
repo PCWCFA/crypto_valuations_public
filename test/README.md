@@ -5,11 +5,4 @@ in the Actual Results column. You can see these comments by having the mouse poi
 
  ![image info](../readme-files/how_to_see_the_test_results.png)
 
-## Mandatory Test
-See crypto_valuation_test_cases.xlsx. I recommend that you run config.py's tc_conf_001 to ensure that your local copy
-is configured and working correctly. You'll have to copy tc_conf_001.xlsx to the source-file directory and rename the 
-file as crypto_valuations.xlsx, ensure that all the pre-conditions are met, and run the test case from 
-crypto_valuation.xlsx's xlwing plugin's Run Main button. 
-
-## Optional Tests
-All other test cases are optional to be re-run after a pull request, but you're welcome to re-run them.
+See test/crypto_valuation_test_cases_V1.1.xlsx for the test cases and results.
